@@ -1,0 +1,815 @@
+/* =========================================
+   MÁS O MENOS - FÚTBOL
+   Estilos principales
+   ========================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --background: #07111f;
+    --background-light: #0d1b2f;
+    --card: #101f34;
+    --card-light: #162942;
+
+    --green: #20d47a;
+    --green-dark: #0c9e58;
+
+    --red: #ff4d67;
+    --red-dark: #c72e47;
+
+    --yellow: #ffc857;
+    --white: #f5f7fa;
+    --gray: #aeb8c6;
+    --gray-dark: #718096;
+
+    --border: rgba(255, 255, 255, 0.08);
+}
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at top,
+            #122a47 0%,
+            var(--background) 45%,
+            #030914 100%
+        );
+
+    color: var(--white);
+
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+}
+
+
+/* =========================================
+   CONTENEDOR PRINCIPAL
+   ========================================= */
+
+.game-container {
+    width: 100%;
+    max-width: 1050px;
+    margin: auto;
+}
+
+
+/* =========================================
+   CABECERA
+   ========================================= */
+
+.game-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.game-header h1 {
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: 900;
+    letter-spacing: -1px;
+
+    background: linear-gradient(
+        90deg,
+        #ffffff,
+        #9ee7ff
+    );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.game-header p {
+    color: var(--gray);
+    margin-top: 8px;
+    font-size: 1rem;
+}
+
+
+/* =========================================
+   PANTALLAS
+   ========================================= */
+
+.screen {
+    width: 100%;
+}
+
+.hidden {
+    display: none !important;
+}
+
+
+/* =========================================
+   PANTALLA DE INICIO
+   ========================================= */
+
+.intro-card {
+    max-width: 600px;
+    margin: 0 auto;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(22, 41, 66, 0.95),
+            rgba(10, 25, 43, 0.95)
+        );
+
+    border: 1px solid var(--border);
+
+    border-radius: 28px;
+
+    padding: 55px 35px;
+
+    text-align: center;
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.4);
+}
+
+.football {
+    font-size: 4.5rem;
+    margin-bottom: 20px;
+
+    animation: floatingBall 3s ease-in-out infinite;
+}
+
+@keyframes floatingBall {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(8deg);
+    }
+}
+
+.intro-card h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.intro-card p {
+    color: var(--gray);
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.intro-card .small-text {
+    font-size: 0.9rem;
+    margin-top: 10px;
+    color: var(--gray-dark);
+}
+
+
+/* =========================================
+   BOTÓN PRINCIPAL
+   ========================================= */
+
+.main-button {
+    margin-top: 30px;
+
+    border: none;
+    border-radius: 14px;
+
+    padding: 16px 40px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--green),
+            var(--green-dark)
+        );
+
+    color: white;
+
+    font-size: 1rem;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        filter 0.2s ease;
+
+    box-shadow:
+        0 8px 25px rgba(32, 212, 122, 0.25);
+}
+
+.main-button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+
+    box-shadow:
+        0 12px 30px rgba(32, 212, 122, 0.35);
+}
+
+.main-button:active {
+    transform: translateY(0);
+}
+
+
+/* =========================================
+   INFORMACIÓN DEL JUEGO
+   ========================================= */
+
+.game-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 20px;
+
+    padding: 0 5px;
+
+    color: var(--gray);
+
+    font-size: 0.95rem;
+}
+
+.game-info strong {
+    color: var(--white);
+}
+
+#streak {
+    color: var(--yellow);
+}
+
+
+/* =========================================
+   JUGADORES
+   ========================================= */
+
+.players-container {
+    display: grid;
+
+    grid-template-columns: 1fr 70px 1fr;
+
+    align-items: stretch;
+
+    gap: 18px;
+}
+
+.player-card {
+    position: relative;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(22, 41, 66, 0.98),
+            rgba(11, 27, 46, 0.98)
+        );
+
+    border: 1px solid var(--border);
+
+    border-radius: 24px;
+
+    padding: 25px;
+
+    text-align: center;
+
+    min-width: 0;
+
+    box-shadow:
+        0 15px 45px rgba(0, 0, 0, 0.25);
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.player-card:hover {
+    transform: translateY(-2px);
+}
+
+.current-player {
+    border-color: rgba(32, 212, 122, 0.18);
+}
+
+.next-player {
+    border-color: rgba(255, 200, 87, 0.15);
+}
+
+.player-label {
+    font-size: 0.7rem;
+
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+
+    color: var(--gray-dark);
+
+    margin-bottom: 15px;
+}
+
+
+/* =========================================
+   FOTO DEL JUGADOR
+   ========================================= */
+
+.player-photo-container {
+    width: 145px;
+    height: 145px;
+
+    margin: 0 auto 18px;
+
+    border-radius: 50%;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            #172d48,
+            #081522
+        );
+
+    border: 3px solid rgba(255, 255, 255, 0.08);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.player-photo-container img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+.player-card h2 {
+    font-size: clamp(1.2rem, 3vw, 1.65rem);
+
+    margin-bottom: 5px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.player-card p {
+    color: var(--gray);
+
+    font-size: 0.9rem;
+
+    min-height: 20px;
+}
+
+
+/* =========================================
+   VALOR
+   ========================================= */
+
+.player-value {
+    margin-top: 20px;
+
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+
+    font-weight: 900;
+
+    color: var(--green);
+}
+
+.hidden-value {
+    color: var(--yellow);
+
+    font-size: 3rem;
+}
+
+
+/* =========================================
+   VS
+   ========================================= */
+
+.versus {
+    align-self: center;
+
+    width: 60px;
+    height: 60px;
+
+    border-radius: 50%;
+
+    background: #081522;
+
+    border: 2px solid rgba(255, 255, 255, 0.1);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 0.85rem;
+
+    font-weight: 900;
+
+    color: var(--gray);
+}
+
+
+/* =========================================
+   BOTONES MÁS / MENOS
+   ========================================= */
+
+.answer-buttons {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 18px;
+
+    margin-top: 25px;
+}
+
+.answer-button {
+    border: none;
+
+    border-radius: 16px;
+
+    padding: 19px;
+
+    font-size: 1.1rem;
+
+    font-weight: 900;
+
+    color: white;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        filter 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.answer-button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+}
+
+.answer-button:active {
+    transform: translateY(1px);
+}
+
+.answer-button:disabled {
+    cursor: default;
+    opacity: 0.6;
+    transform: none;
+}
+
+.higher {
+    background:
+        linear-gradient(
+            135deg,
+            #20d47a,
+            #0c9e58
+        );
+
+    box-shadow:
+        0 8px 25px rgba(32, 212, 122, 0.18);
+}
+
+.lower {
+    background:
+        linear-gradient(
+            135deg,
+            #4b79d8,
+            #3154a2
+        );
+
+    box-shadow:
+        0 8px 25px rgba(75, 121, 216, 0.18);
+}
+
+
+/* =========================================
+   FEEDBACK
+   ========================================= */
+
+.feedback {
+    margin-top: 18px;
+
+    border-radius: 14px;
+
+    padding: 15px;
+
+    text-align: center;
+
+    font-weight: 700;
+
+    animation: feedbackIn 0.25s ease;
+}
+
+@keyframes feedbackIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.feedback.correct {
+    background: rgba(32, 212, 122, 0.12);
+    color: var(--green);
+    border: 1px solid rgba(32, 212, 122, 0.2);
+}
+
+.feedback.wrong {
+    background: rgba(255, 77, 103, 0.12);
+    color: var(--red);
+    border: 1px solid rgba(255, 77, 103, 0.2);
+}
+
+
+/* =========================================
+   PANTALLAS DE RESULTADO
+   ========================================= */
+
+.result-card {
+    max-width: 600px;
+
+    margin: 0 auto;
+
+    padding: 55px 35px;
+
+    border-radius: 28px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(22, 41, 66, 0.98),
+            rgba(10, 25, 43, 0.98)
+        );
+
+    border: 1px solid var(--border);
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.4);
+}
+
+.result-icon {
+    font-size: 4.5rem;
+    margin-bottom: 15px;
+}
+
+.result-card h2 {
+    font-size: 2rem;
+    margin-bottom: 12px;
+}
+
+.result-card p {
+    color: var(--gray);
+}
+
+.final-streak {
+    margin-top: 25px;
+}
+
+.final-streak span {
+    display: block;
+
+    font-size: 4rem;
+
+    font-weight: 900;
+
+    color: var(--red);
+}
+
+.final-streak small {
+    color: var(--gray);
+}
+
+
+/* =========================================
+   VICTORIA
+   ========================================= */
+
+.win-card {
+    border-color: rgba(32, 212, 122, 0.3);
+
+    box-shadow:
+        0 0 60px rgba(32, 212, 122, 0.12),
+        0 25px 70px rgba(0, 0, 0, 0.4);
+}
+
+.win-card .result-icon {
+    animation: trophy 1.5s ease-in-out infinite;
+}
+
+@keyframes trophy {
+
+    0%,
+    100% {
+        transform: rotate(-4deg) scale(1);
+    }
+
+    50% {
+        transform: rotate(4deg) scale(1.08);
+    }
+}
+
+.win-card h2 {
+    color: var(--green);
+}
+
+
+/* =========================================
+   CONTRASEÑA
+   ========================================= */
+
+.password-box {
+    margin-top: 30px;
+
+    padding: 22px;
+
+    border-radius: 16px;
+
+    background: rgba(0, 0, 0, 0.25);
+
+    border: 1px dashed rgba(32, 212, 122, 0.4);
+}
+
+.password-box span {
+    display: block;
+
+    font-size: 0.7rem;
+
+    letter-spacing: 2px;
+
+    color: var(--gray-dark);
+
+    font-weight: 800;
+
+    margin-bottom: 8px;
+}
+
+.password-box strong {
+    display: block;
+
+    font-size: 2rem;
+
+    letter-spacing: 4px;
+
+    color: var(--yellow);
+}
+
+
+/* =========================================
+   ANIMACIONES
+   ========================================= */
+
+@keyframes successPulse {
+
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.03);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.success-animation {
+    animation: successPulse 0.4s ease;
+}
+
+
+/* =========================================
+   MÓVIL
+   ========================================= */
+
+@media (max-width: 700px) {
+
+    body {
+        padding: 12px;
+        align-items: flex-start;
+    }
+
+    .game-container {
+        padding-top: 15px;
+    }
+
+    .game-header {
+        margin-bottom: 20px;
+    }
+
+    .game-header h1 {
+        font-size: 2rem;
+    }
+
+    .game-header p {
+        font-size: 0.85rem;
+    }
+
+    .intro-card,
+    .result-card {
+        padding: 40px 22px;
+    }
+
+    .players-container {
+        grid-template-columns: 1fr;
+
+        gap: 10px;
+    }
+
+    .versus {
+        width: 45px;
+        height: 45px;
+
+        justify-self: center;
+
+        margin: -2px 0;
+    }
+
+    .player-card {
+        padding: 20px;
+    }
+
+    .player-photo-container {
+        width: 110px;
+        height: 110px;
+    }
+
+    .player-card h2 {
+        font-size: 1.25rem;
+    }
+
+    .player-value {
+        margin-top: 12px;
+        font-size: 1.7rem;
+    }
+
+    .hidden-value {
+        font-size: 2.5rem;
+    }
+
+    .answer-buttons {
+        gap: 10px;
+    }
+
+    .answer-button {
+        padding: 17px 10px;
+        font-size: 1rem;
+    }
+
+    .game-info {
+        font-size: 0.85rem;
+    }
+}
+
+
+/* =========================================
+   PANTALLAS MUY PEQUEÑAS
+   ========================================= */
+
+@media (max-width: 380px) {
+
+    .player-photo-container {
+        width: 90px;
+        height: 90px;
+    }
+
+    .answer-button {
+        padding: 15px 5px;
+    }
+
+    .password-box strong {
+        font-size: 1.5rem;
+    }
+}
