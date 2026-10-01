@@ -1,16 +1,6 @@
 /* =========================================================
-   MÁS O MENOS - FÚTBOL
+   MAS O MENOS (UN SULO)
    Juego de comparación de valores de mercado
-
-   Base de jugadores:
-   - 100 jugadores de la lista 2026/27 basada en Transfermarkt
-   - + Jokin Ezkieta como guiño al Cádiz CF
-
-   Objetivo:
-   - 20 aciertos consecutivos
-   - Un fallo reinicia la partida
-   - La secuencia se baraja de nuevo en cada partida
-   - Contraseña: suburbio
    ========================================================= */
 
 
@@ -19,162 +9,152 @@
 // =========================================================
 
 const TARGET_STREAK = 20;
+
 const PASSWORD = "suburbio";
+
+const PASSWORD_CODE = "03 =PQKL";
 
 
 // =========================================================
 // JUGADORES
+//
+// value = millones de euros
+//
+// wiki = nombre que utilizaremos para buscar
+// automáticamente la fotografía en Wikipedia.
 // =========================================================
 
 const players = [
 
-    // TOP DEL MUNDO
+    { name: "Erling Haaland", club: "Manchester City", value: 220, wiki: "Erling Haaland" },
+    { name: "Lamine Yamal", club: "FC Barcelona", value: 220, wiki: "Lamine Yamal" },
+    { name: "Kylian Mbappé", club: "Real Madrid", value: 200, wiki: "Kylian Mbappé" },
+    { name: "Michael Olise", club: "Bayern Munich", value: 170, wiki: "Michael Olise" },
+    { name: "Jude Bellingham", club: "Real Madrid", value: 160, wiki: "Jude Bellingham" },
+    { name: "Pedri", club: "FC Barcelona", value: 150, wiki: "Pedri" },
 
-    { name: "Erling Haaland", club: "Manchester City", value: 220 },
-    { name: "Lamine Yamal", club: "FC Barcelona", value: 220 },
-    { name: "Kylian Mbappé", club: "Real Madrid", value: 200 },
-    { name: "Michael Olise", club: "Bayern Munich", value: 170 },
-    { name: "Jude Bellingham", club: "Real Madrid", value: 160 },
-    { name: "Pedri", club: "FC Barcelona", value: 150 },
+    { name: "Vinícius Júnior", club: "Real Madrid", value: 140, wiki: "Vinicius Junior" },
+    { name: "Vitinha", club: "Paris Saint-Germain", value: 140, wiki: "Vitinha" },
+    { name: "Khvicha Kvaratskhelia", club: "Paris Saint-Germain", value: 140, wiki: "Khvicha Kvaratskhelia" },
+    { name: "João Neves", club: "Paris Saint-Germain", value: 140, wiki: "João Neves" },
 
-    { name: "Vinícius Júnior", club: "Real Madrid", value: 140 },
-    { name: "Vitinha", club: "Paris Saint-Germain", value: 140 },
-    { name: "Khvicha Kvaratskhelia", club: "Paris Saint-Germain", value: 140 },
-    { name: "João Neves", club: "Paris Saint-Germain", value: 140 },
+    { name: "Declan Rice", club: "Arsenal", value: 120, wiki: "Declan Rice" },
+    { name: "Julián Álvarez", club: "Atlético de Madrid", value: 120, wiki: "Julián Álvarez" },
+    { name: "Désiré Doué", club: "Paris Saint-Germain", value: 120, wiki: "Désiré Doué" },
 
-    { name: "Declan Rice", club: "Arsenal", value: 120 },
-    { name: "Julián Álvarez", club: "Atlético de Madrid", value: 120 },
-    { name: "Désiré Doué", club: "Paris Saint-Germain", value: 120 },
+    { name: "Bukayo Saka", club: "Arsenal", value: 110, wiki: "Bukayo Saka" },
+    { name: "Morgan Rogers", club: "Chelsea", value: 110, wiki: "Morgan Rogers" },
+    { name: "Elliot Anderson", club: "Manchester City", value: 110, wiki: "Elliot Anderson" },
 
-    { name: "Bukayo Saka", club: "Arsenal", value: 110 },
-    { name: "Morgan Rogers", club: "Chelsea", value: 110 },
-    { name: "Elliot Anderson", club: "Manchester City", value: 110 },
+    { name: "Ousmane Dembélé", club: "Paris Saint-Germain", value: 100, wiki: "Ousmane Dembélé" },
+    { name: "Dominik Szoboszlai", club: "Liverpool", value: 100, wiki: "Dominik Szoboszlai" },
+    { name: "William Saliba", club: "Arsenal", value: 100, wiki: "William Saliba" },
+    { name: "Cole Palmer", club: "Chelsea", value: 100, wiki: "Cole Palmer" },
+    { name: "Jamal Musiala", club: "Bayern Munich", value: 100, wiki: "Jamal Musiala" },
+    { name: "Florian Wirtz", club: "Liverpool", value: 100, wiki: "Florian Wirtz" },
+    { name: "Fermín López", club: "FC Barcelona", value: 100, wiki: "Fermín López" },
+    { name: "Enzo Fernández", club: "Manchester City", value: 100, wiki: "Enzo Fernández" },
+    { name: "Moisés Caicedo", club: "Chelsea", value: 100, wiki: "Moisés Caicedo" },
+    { name: "Pau Cubarsí", club: "FC Barcelona", value: 100, wiki: "Pau Cubarsí" },
 
-    { name: "Ousmane Dembélé", club: "Paris Saint-Germain", value: 100 },
-    { name: "Dominik Szoboszlai", club: "Liverpool", value: 100 },
-    { name: "William Saliba", club: "Arsenal", value: 100 },
-    { name: "Cole Palmer", club: "Chelsea", value: 100 },
-    { name: "Jamal Musiala", club: "Bayern Munich", value: 100 },
-    { name: "Florian Wirtz", club: "Liverpool", value: 100 },
-    { name: "Fermín López", club: "FC Barcelona", value: 100 },
-    { name: "Enzo Fernández", club: "Manchester City", value: 100 },
-    { name: "Moisés Caicedo", club: "Chelsea", value: 100 },
-    { name: "Pau Cubarsí", club: "FC Barcelona", value: 100 },
+    { name: "Federico Valverde", club: "Real Madrid", value: 90, wiki: "Federico Valverde" },
+    { name: "Rayan Cherki", club: "Manchester City", value: 90, wiki: "Rayan Cherki" },
+    { name: "Bradley Barcola", club: "Paris Saint-Germain", value: 90, wiki: "Bradley Barcola" },
+    { name: "Aleksandar Pavlović", club: "Bayern Munich", value: 90, wiki: "Aleksandar Pavlović" },
+    { name: "Arda Güler", club: "Real Madrid", value: 90, wiki: "Arda Güler" },
+    { name: "Yan Diomande", club: "Real Madrid", value: 90, wiki: "Yan Diomande" },
 
-    // 90M
+    { name: "Alexander Isak", club: "Liverpool", value: 85, wiki: "Alexander Isak" },
+    { name: "Lautaro Martínez", club: "Inter Milan", value: 85, wiki: "Lautaro Martínez" },
 
-    { name: "Federico Valverde", club: "Real Madrid", value: 90 },
-    { name: "Rayan Cherki", club: "Manchester City", value: 90 },
-    { name: "Bradley Barcola", club: "Liverpool", value: 90 },
-    { name: "Aleksandar Pavlović", club: "Bayern Munich", value: 90 },
-    { name: "Arda Güler", club: "Real Madrid", value: 90 },
-    { name: "Yan Diomande", club: "Real Madrid", value: 90 },
+    { name: "Sandro Tonali", club: "Tottenham Hotspur", value: 80, wiki: "Sandro Tonali" },
+    { name: "Achraf Hakimi", club: "Paris Saint-Germain", value: 80, wiki: "Achraf Hakimi" },
+    { name: "Ryan Gravenberch", club: "Liverpool", value: 80, wiki: "Ryan Gravenberch" },
+    { name: "Anthony Gordon", club: "FC Barcelona", value: 80, wiki: "Anthony Gordon" },
+    { name: "Antoine Semenyo", club: "Manchester City", value: 80, wiki: "Antoine Semenyo" },
+    { name: "Nuno Mendes", club: "Paris Saint-Germain", value: 80, wiki: "Nuno Mendes" },
+    { name: "João Pedro", club: "Chelsea", value: 80, wiki: "João Pedro" },
+    { name: "Willian Pacho", club: "Paris Saint-Germain", value: 80, wiki: "Willian Pacho" },
+    { name: "Hugo Ekitiké", club: "Liverpool", value: 80, wiki: "Hugo Ekitike" },
+    { name: "Warren Zaïre-Emery", club: "Paris Saint-Germain", value: 80, wiki: "Warren Zaïre-Emery" },
+    { name: "Nico Paz", club: "Como", value: 80, wiki: "Nico Paz" },
+    { name: "Estêvão", club: "Chelsea", value: 80, wiki: "Estêvão" },
+    { name: "Ayyoub Bouaddi", club: "Manchester City", value: 80, wiki: "Ayyoub Bouaddi" },
 
-    // 85M
+    { name: "Dayot Upamecano", club: "Bayern Munich", value: 75, wiki: "Dayot Upamecano" },
+    { name: "Victor Osimhen", club: "Galatasaray", value: 75, wiki: "Victor Osimhen" },
+    { name: "Bryan Mbeumo", club: "Manchester United", value: 75, wiki: "Bryan Mbeumo" },
+    { name: "Martín Zubimendi", club: "Arsenal", value: 75, wiki: "Martín Zubimendi" },
+    { name: "Gabriel Magalhães", club: "Arsenal", value: 75, wiki: "Gabriel Magalhães" },
+    { name: "Jérémy Doku", club: "Manchester City", value: 75, wiki: "Jérémy Doku" },
+    { name: "Matheus Cunha", club: "Manchester United", value: 75, wiki: "Matheus Cunha" },
+    { name: "Benjamin Šeško", club: "Manchester United", value: 75, wiki: "Benjamin Šeško" },
+    { name: "Kenan Yıldız", club: "Juventus", value: 75, wiki: "Kenan Yıldız" },
 
-    { name: "Alexander Isak", club: "Liverpool", value: 85 },
-    { name: "Lautaro Martínez", club: "Inter Milan", value: 85 },
+    { name: "Martin Ødegaard", club: "Arsenal", value: 70, wiki: "Martin Ødegaard" },
+    { name: "Marc Guéhi", club: "Manchester City", value: 70, wiki: "Marc Guéhi" },
+    { name: "Phil Foden", club: "Manchester City", value: 70, wiki: "Phil Foden" },
+    { name: "Raphinha", club: "FC Barcelona", value: 70, wiki: "Raphinha" },
+    { name: "Aurélien Tchouaméni", club: "Real Madrid", value: 70, wiki: "Aurélien Tchouaméni" },
+    { name: "Jurriën Timber", club: "Arsenal", value: 70, wiki: "Jurriën Timber" },
+    { name: "Morgan Gibbs-White", club: "Nottingham Forest", value: 70, wiki: "Morgan Gibbs-White" },
+    { name: "Joško Gvardiol", club: "Manchester City", value: 70, wiki: "Joško Gvardiol" },
+    { name: "Luis Díaz", club: "Bayern Munich", value: 70, wiki: "Luis Díaz" },
+    { name: "Bruno Guimarães", club: "Arsenal", value: 70, wiki: "Bruno Guimarães" },
+    { name: "Alexis Mac Allister", club: "Liverpool", value: 70, wiki: "Alexis Mac Allister" },
+    { name: "Nico O'Reilly", club: "Manchester City", value: 70, wiki: "Nico O'Reilly" },
+    { name: "Adam Wharton", club: "Crystal Palace", value: 70, wiki: "Adam Wharton" },
+    { name: "Kobbie Mainoo", club: "Manchester United", value: 70, wiki: "Kobbie Mainoo" },
+    { name: "Eli Junior Kroupi", club: "AFC Bournemouth", value: 70, wiki: "Eli Junior Kroupi" },
 
-    // 80M
+    { name: "Alessandro Bastoni", club: "Inter Milan", value: 65, wiki: "Alessandro Bastoni" },
+    { name: "Viktor Gyökeres", club: "Arsenal", value: 65, wiki: "Viktor Gyökeres" },
+    { name: "Eberechi Eze", club: "Arsenal", value: 65, wiki: "Eberechi Eze" },
+    { name: "Igor Thiago", club: "Brentford", value: 65, wiki: "Igor Thiago" },
+    { name: "Johan Manzambi", club: "Aston Villa", value: 65, wiki: "Johan Manzambi" },
 
-    { name: "Sandro Tonali", club: "Tottenham Hotspur", value: 80 },
-    { name: "Achraf Hakimi", club: "Paris Saint-Germain", value: 80 },
-    { name: "Ryan Gravenberch", club: "Liverpool", value: 80 },
-    { name: "Anthony Gordon", club: "FC Barcelona", value: 80 },
-    { name: "Antoine Semenyo", club: "Manchester City", value: 80 },
-    { name: "Nuno Mendes", club: "Paris Saint-Germain", value: 80 },
-    { name: "João Pedro", club: "Chelsea", value: 80 },
-    { name: "Willian Pacho", club: "Paris Saint-Germain", value: 80 },
-    { name: "Hugo Ekitiké", club: "Liverpool", value: 80 },
-    { name: "Warren Zaïre-Emery", club: "Paris Saint-Germain", value: 80 },
-    { name: "Nico Paz", club: "Como", value: 80 },
-    { name: "Estêvão", club: "Chelsea", value: 80 },
-    { name: "Ayyoub Bouaddi", club: "Manchester City", value: 80 },
+    { name: "Harry Kane", club: "Bayern Munich", value: 60, wiki: "Harry Kane" },
+    { name: "Marc Cucurella", club: "Chelsea", value: 60, wiki: "Marc Cucurella" },
+    { name: "Dani Olmo", club: "FC Barcelona", value: 60, wiki: "Dani Olmo" },
+    { name: "Trent Alexander-Arnold", club: "Real Madrid", value: 60, wiki: "Trent Alexander-Arnold" },
+    { name: "Jules Koundé", club: "FC Barcelona", value: 60, wiki: "Jules Koundé" },
+    { name: "Cody Gakpo", club: "Liverpool", value: 60, wiki: "Cody Gakpo" },
+    { name: "Reece James", club: "Chelsea", value: 60, wiki: "Reece James" },
+    { name: "Pedro Neto", club: "Chelsea", value: 60, wiki: "Pedro Neto" },
+    { name: "Jan Paul van Hecke", club: "Brighton & Hove Albion", value: 60, wiki: "Jan Paul van Hecke" },
+    { name: "Rasmus Højlund", club: "Napoli", value: 60, wiki: "Rasmus Højlund" },
+    { name: "Dean Huijsen", club: "Real Madrid", value: 60, wiki: "Dean Huijsen" },
+    { name: "Luka Vušković", club: "Tottenham Hotspur", value: 60, wiki: "Luka Vušković" },
+    { name: "Lennart Karl", club: "Bayern Munich", value: 60, wiki: "Lennart Karl" },
 
-    // 75M
-
-    { name: "Dayot Upamecano", club: "Bayern Munich", value: 75 },
-    { name: "Victor Osimhen", club: "Galatasaray", value: 75 },
-    { name: "Bryan Mbeumo", club: "Manchester United", value: 75 },
-    { name: "Martín Zubimendi", club: "Arsenal", value: 75 },
-    { name: "Gabriel", club: "Arsenal", value: 75 },
-    { name: "Jérémy Doku", club: "Manchester City", value: 75 },
-    { name: "Matheus Cunha", club: "Manchester United", value: 75 },
-    { name: "Benjamin Šeško", club: "Manchester United", value: 75 },
-    { name: "Kenan Yıldız", club: "Juventus", value: 75 },
-
-    // 70M
-
-    { name: "Martin Ødegaard", club: "Arsenal", value: 70 },
-    { name: "Marc Guéhi", club: "Manchester City", value: 70 },
-    { name: "Phil Foden", club: "Manchester City", value: 70 },
-    { name: "Raphinha", club: "FC Barcelona", value: 70 },
-    { name: "Aurélien Tchouaméni", club: "Real Madrid", value: 70 },
-    { name: "Jurriën Timber", club: "Arsenal", value: 70 },
-    { name: "Morgan Gibbs-White", club: "Nottingham Forest", value: 70 },
-    { name: "Joško Gvardiol", club: "Manchester City", value: 70 },
-    { name: "Luis Díaz", club: "Bayern Munich", value: 70 },
-    { name: "Bruno Guimarães", club: "Arsenal", value: 70 },
-    { name: "Alexis Mac Allister", club: "Liverpool", value: 70 },
-    { name: "Nico O'Reilly", club: "Manchester City", value: 70 },
-    { name: "Adam Wharton", club: "Crystal Palace", value: 70 },
-    { name: "Kobbie Mainoo", club: "Manchester United", value: 70 },
-    { name: "Eli Junior Kroupi", club: "AFC Bournemouth", value: 70 },
-
-    // 65M
-
-    { name: "Alessandro Bastoni", club: "Inter Milan", value: 65 },
-    { name: "Viktor Gyökeres", club: "Arsenal", value: 65 },
-    { name: "Eberechi Eze", club: "Arsenal", value: 65 },
-    { name: "Igor Thiago", club: "Brentford", value: 65 },
-    { name: "Johan Manzambi", club: "Aston Villa", value: 65 },
-
-    // 60M
-
-    { name: "Harry Kane", club: "Bayern Munich", value: 60 },
-    { name: "Marc Cucurella", club: "Real Madrid", value: 60 },
-    { name: "Dani Olmo", club: "FC Barcelona", value: 60 },
-    { name: "Trent Alexander-Arnold", club: "Real Madrid", value: 60 },
-    { name: "Jules Koundé", club: "FC Barcelona", value: 60 },
-    { name: "Cody Gakpo", club: "Liverpool", value: 60 },
-    { name: "Reece James", club: "Chelsea", value: 60 },
-    { name: "Pedro Neto", club: "Chelsea", value: 60 },
-    { name: "Jan Paul van Hecke", club: "Tottenham Hotspur", value: 60 },
-    { name: "Rasmus Højlund", club: "Napoli", value: 60 },
-    { name: "Dean Huijsen", club: "Real Madrid", value: 60 },
-    { name: "Luka Vušković", club: "Brighton", value: 60 },
-    { name: "Rayan", club: "AFC Bournemouth", value: 60 },
-    { name: "Lennart Karl", club: "Bayern Munich", value: 60 },
-
-    // 55M
-
-    { name: "Rúben Dias", club: "Manchester City", value: 55 },
-    { name: "Kai Havertz", club: "Arsenal", value: 55 },
-    { name: "Rodri", club: "FC Barcelona", value: 55 },
-    { name: "Nico Schlotterbeck", club: "Borussia Dortmund", value: 55 },
-    { name: "Ferran Torres", club: "Paris Saint-Germain", value: 55 },
-    { name: "Felix Nmecha", club: "Borussia Dortmund", value: 55 },
-    { name: "Nick Woltemade", club: "Juventus", value: 55 },
-    { name: "Riccardo Calafiori", club: "Arsenal", value: 55 },
-    { name: "Mason Greenwood", club: "Fenerbahçe", value: 55 },
-    { name: "Iliman Ndiaye", club: "Manchester City", value: 55 },
+    { name: "Rúben Dias", club: "Manchester City", value: 55, wiki: "Rúben Dias" },
+    { name: "Kai Havertz", club: "Arsenal", value: 55, wiki: "Kai Havertz" },
+    { name: "Rodri", club: "Manchester City", value: 55, wiki: "Rodri" },
+    { name: "Nico Schlotterbeck", club: "Borussia Dortmund", value: 55, wiki: "Nico Schlotterbeck" },
+    { name: "Ferran Torres", club: "FC Barcelona", value: 55, wiki: "Ferran Torres" },
+    { name: "Felix Nmecha", club: "Borussia Dortmund", value: 55, wiki: "Felix Nmecha" },
+    { name: "Nick Woltemade", club: "Juventus", value: 55, wiki: "Nick Woltemade" },
+    { name: "Riccardo Calafiori", club: "Arsenal", value: 55, wiki: "Riccardo Calafiori" },
+    { name: "Mason Greenwood", club: "Fenerbahçe", value: 40, wiki: "Mason Greenwood" },
+    { name: "Iliman Ndiaye", club: "Everton", value: 55, wiki: "Iliman Ndiaye" },
 
 
     // =====================================================
-    // GUIÑO AL CÁDIZ CF 💛💙
+    // CÁDIZ CF 💛💙
     // =====================================================
 
     {
         name: "Jokin Ezkieta",
         club: "Cádiz CF",
-        value: 2.5
+        value: 2.5,
+        wiki: "Jokin Ezkieta"
     }
 
 ];
 
 
 // =========================================================
-// ESTADO DEL JUEGO
+// ESTADO
 // =========================================================
 
 let deck = [];
@@ -188,7 +168,7 @@ let answering = false;
 
 
 // =========================================================
-// ELEMENTOS DEL DOM
+// ELEMENTOS
 // =========================================================
 
 const startScreen = document.getElementById("start-screen");
@@ -219,28 +199,25 @@ const feedback = document.getElementById("feedback");
 
 const lostStreak = document.getElementById("lost-streak");
 
-const passwordElement = document.getElementById("password");
+const passwordElement =
+    document.getElementById("password");
+
+const passwordCodeElement =
+    document.getElementById("password-code");
 
 
 // =========================================================
-// FORMATEAR VALORES
+// FORMATEAR VALOR
 // =========================================================
 
 function formatValue(value) {
-
-    if (value < 1) {
-        return `€${value.toLocaleString("es-ES")} M`;
-    }
 
     return `€${value.toLocaleString("es-ES")} M`;
 }
 
 
 // =========================================================
-// GENERAR AVATAR
-//
-// De momento utilizamos iniciales generadas localmente.
-// Así no dependemos de imágenes externas.
+// INICIALES
 // =========================================================
 
 function getInitials(name) {
@@ -251,7 +228,9 @@ function getInitials(name) {
         .split(/\s+/);
 
     if (words.length === 1) {
-        return words[0].substring(0, 2).toUpperCase();
+        return words[0]
+            .substring(0, 2)
+            .toUpperCase();
     }
 
     return (
@@ -260,6 +239,10 @@ function getInitials(name) {
     ).toUpperCase();
 }
 
+
+// =========================================================
+// AVATAR DE RESPALDO
+// =========================================================
 
 function createAvatar(name, color) {
 
@@ -314,19 +297,73 @@ function createAvatar(name, color) {
         </svg>
     `;
 
-    return "data:image/svg+xml;charset=UTF-8," +
-        encodeURIComponent(svg);
+    return (
+        "data:image/svg+xml;charset=UTF-8," +
+        encodeURIComponent(svg)
+    );
 }
 
 
-function setPlayerImage(element, player, color) {
+// =========================================================
+// CARGAR FOTO DE WIKIPEDIA
+// =========================================================
 
-    element.src = createAvatar(
-        player.name,
-        color
-    );
+async function loadWikipediaPhoto(player, element, color) {
 
-    element.alt = player.name;
+    const fallback =
+        createAvatar(player.name, color);
+
+    element.src = fallback;
+
+    try {
+
+        const url =
+            "https://en.wikipedia.org/w/api.php" +
+            "?action=query" +
+            "&format=json" +
+            "&prop=pageimages" +
+            "&piprop=thumbnail" +
+            "&pithumbsize=500" +
+            "&titles=" +
+            encodeURIComponent(player.wiki) +
+            "&origin=*";
+
+        const response =
+            await fetch(url);
+
+        if (!response.ok) {
+            return;
+        }
+
+        const data =
+            await response.json();
+
+        const pages =
+            data?.query?.pages;
+
+        if (!pages) {
+            return;
+        }
+
+        const page =
+            Object.values(pages)[0];
+
+        if (
+            page &&
+            page.thumbnail &&
+            page.thumbnail.source
+        ) {
+
+            element.src =
+                page.thumbnail.source;
+        }
+
+    } catch (error) {
+
+        // Si Wikipedia falla, dejamos
+        // el avatar de iniciales.
+        element.src = fallback;
+    }
 }
 
 
@@ -363,7 +400,7 @@ function shuffle(array) {
 
 
 // =========================================================
-// CREAR NUEVA PARTIDA
+// INICIAR PARTIDA
 // =========================================================
 
 function startGame() {
@@ -372,18 +409,22 @@ function startGame() {
     round = 1;
     answering = false;
 
-    // Barajamos TODOS los jugadores.
     deck = shuffle(players);
 
-    currentPlayer = deck.shift();
-    nextPlayer = deck.shift();
+    currentPlayer =
+        deck.shift();
+
+    nextPlayer =
+        deck.shift();
 
     updateScore();
+
     displayPlayers();
 
     showScreen(gameScreen);
 
     feedback.classList.add("hidden");
+
     feedback.textContent = "";
 
     enableButtons();
@@ -403,7 +444,9 @@ function displayPlayers() {
         currentPlayer.club;
 
     currentValue.textContent =
-        formatValue(currentPlayer.value);
+        formatValue(
+            currentPlayer.value
+        );
 
 
     nextName.textContent =
@@ -419,22 +462,44 @@ function displayPlayers() {
     );
 
 
-    setPlayerImage(
-        currentImage,
+    // Avatar inmediato
+    currentImage.src =
+        createAvatar(
+            currentPlayer.name,
+            "#20d47a"
+        );
+
+    nextImage.src =
+        createAvatar(
+            nextPlayer.name,
+            "#ffc857"
+        );
+
+
+    currentImage.alt =
+        currentPlayer.name;
+
+    nextImage.alt =
+        nextPlayer.name;
+
+
+    // Intentamos cargar las fotos reales.
+    loadWikipediaPhoto(
         currentPlayer,
+        currentImage,
         "#20d47a"
     );
 
-    setPlayerImage(
-        nextImage,
+    loadWikipediaPhoto(
         nextPlayer,
+        nextImage,
         "#ffc857"
     );
 }
 
 
 // =========================================================
-// ACTUALIZAR CONTADOR
+// MARCADOR
 // =========================================================
 
 function updateScore() {
@@ -448,7 +513,7 @@ function updateScore() {
 
 
 // =========================================================
-// RESPONDER
+// RESPUESTA
 // =========================================================
 
 function answer(choice) {
@@ -469,10 +534,26 @@ function answer(choice) {
         nextPlayer.value;
 
 
-    let correct = false;
+    let correct;
 
 
-    if (choice === "higher") {
+    // =============================================
+    // EMPATE
+    //
+    // Si valen exactamente lo mismo:
+    // MÁS y MENOS son correctos.
+    // =============================================
+
+    if (
+        nextValueNumber ===
+        currentValueNumber
+    ) {
+
+        correct = true;
+
+    } else if (
+        choice === "higher"
+    ) {
 
         correct =
             nextValueNumber >
@@ -486,25 +567,11 @@ function answer(choice) {
     }
 
 
-    /*
-       Si tienen exactamente el mismo valor,
-       ninguna de las dos respuestas es correcta.
-
-       Esto evita situaciones ambiguas.
-    */
-
-    if (
-        nextValueNumber ===
-        currentValueNumber
-    ) {
-
-        correct = false;
-    }
-
-
-    // Mostrar el valor real
+    // Revelamos el precio
     nextValue.textContent =
-        formatValue(nextPlayer.value);
+        formatValue(
+            nextPlayer.value
+        );
 
     nextValue.classList.remove(
         "hidden-value"
@@ -541,15 +608,26 @@ function handleCorrect() {
         "correct"
     );
 
-    feedback.innerHTML =
-        `✓ ¡Correcto! ${nextPlayer.name} vale ${formatValue(nextPlayer.value)}.`;
+
+    if (
+        currentPlayer.value ===
+        nextPlayer.value
+    ) {
+
+        feedback.innerHTML =
+            `✓ ¡Correcto! Los dos valen ${formatValue(nextPlayer.value)}.`;
+
+    } else {
+
+        feedback.innerHTML =
+            `✓ ¡Correcto! ${nextPlayer.name} vale ${formatValue(nextPlayer.value)}.`;
+    }
 
 
-    /*
-       Si llega a 20, gana.
-    */
-
-    if (streak >= TARGET_STREAK) {
+    // Victoria
+    if (
+        streak >= TARGET_STREAK
+    ) {
 
         setTimeout(
             showWin,
@@ -560,11 +638,7 @@ function handleCorrect() {
     }
 
 
-    /*
-       El jugador anterior pasa a ser
-       el jugador actual.
-    */
-
+    // Siguiente ronda
     setTimeout(() => {
 
         currentPlayer =
@@ -606,6 +680,7 @@ function handleWrong() {
         "wrong"
     );
 
+
     feedback.innerHTML =
         `✕ Incorrecto. ${nextPlayer.name} vale ${formatValue(nextPlayer.value)}.`;
 
@@ -616,7 +691,9 @@ function handleWrong() {
 
     setTimeout(() => {
 
-        showScreen(loseScreen);
+        showScreen(
+            loseScreen
+        );
 
         answering = false;
 
@@ -643,7 +720,7 @@ function enableButtons() {
 
 
 // =========================================================
-// CAMBIAR DE PANTALLA
+// CAMBIAR PANTALLA
 // =========================================================
 
 function showScreen(screen) {
@@ -680,7 +757,12 @@ function showWin() {
     passwordElement.textContent =
         PASSWORD;
 
-    showScreen(winScreen);
+    passwordCodeElement.textContent =
+        PASSWORD_CODE;
+
+    showScreen(
+        winScreen
+    );
 }
 
 
@@ -693,18 +775,15 @@ startButton.addEventListener(
     startGame
 );
 
-
 restartButton.addEventListener(
     "click",
     startGame
 );
 
-
 higherButton.addEventListener(
     "click",
     () => answer("higher")
 );
-
 
 lowerButton.addEventListener(
     "click",
@@ -715,7 +794,6 @@ lowerButton.addEventListener(
 // =========================================================
 // TECLADO
 //
-// También puedes jugar con:
 // ↑ = MÁS
 // ↓ = MENOS
 // =========================================================
@@ -736,7 +814,9 @@ document.addEventListener(
             return;
         }
 
-        if (event.key === "ArrowUp") {
+        if (
+            event.key === "ArrowUp"
+        ) {
 
             answer("higher");
 
