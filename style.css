@@ -685,6 +685,19 @@ body {
     color: var(--yellow);
 }
 
+.password-box .password-code {
+    margin-top: 14px;
+
+    font-size: 1.25rem;
+
+    letter-spacing: 3px;
+
+    color: var(--white);
+
+    opacity: 0.9;
+
+}
+
 
 /* =========================================
    ANIMACIONES
