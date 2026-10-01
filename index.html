@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Más o Menos - Fútbol</title>
+    <title>Mas o menos (un sulo)</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -14,12 +14,14 @@
     <main class="game-container">
 
         <header class="game-header">
-            <h1>⚽ MÁS O MENOS</h1>
+            <h1>Mas o menos (un sulo)</h1>
             <p>¿Quién tiene mayor valor de mercado?</p>
         </header>
 
 
-        <!-- PANTALLA DE INICIO -->
+        <!-- =========================
+             INICIO
+             ========================= -->
 
         <section id="start-screen" class="screen">
 
@@ -30,8 +32,8 @@
                 <h2>El reto</h2>
 
                 <p>
-                    Consigue <strong>20 aciertos consecutivos</strong>
-                    comparando el valor de mercado de futbolistas.
+                    a ver si tienes cojones de conseguir 20 aciertos
+                    consecutivos comparando el valor de mercado de futbolistas.
                 </p>
 
                 <p class="small-text">
@@ -47,7 +49,9 @@
         </section>
 
 
-        <!-- PANTALLA DEL JUEGO -->
+        <!-- =========================
+             JUEGO
+             ========================= -->
 
         <section id="game-screen" class="screen hidden">
 
@@ -67,7 +71,6 @@
 
             <div class="players-container">
 
-
                 <!-- JUGADOR ACTUAL -->
 
                 <div class="player-card current-player">
@@ -81,6 +84,7 @@
                             id="current-image"
                             src=""
                             alt=""
+                            loading="eager"
                         >
                     </div>
 
@@ -120,6 +124,7 @@
                             id="next-image"
                             src=""
                             alt=""
+                            loading="eager"
                         >
                     </div>
 
@@ -143,7 +148,7 @@
             </div>
 
 
-            <!-- BOTONES -->
+            <!-- RESPUESTAS -->
 
             <div id="answer-buttons" class="answer-buttons">
 
@@ -164,8 +169,6 @@
             </div>
 
 
-            <!-- MENSAJE -->
-
             <div
                 id="feedback"
                 class="feedback hidden"
@@ -174,7 +177,9 @@
         </section>
 
 
-        <!-- PANTALLA DE DERROTA -->
+        <!-- =========================
+             DERROTA
+             ========================= -->
 
         <section id="lose-screen" class="screen hidden">
 
@@ -214,7 +219,9 @@
         </section>
 
 
-        <!-- PANTALLA DE VICTORIA -->
+        <!-- =========================
+             VICTORIA
+             ========================= -->
 
         <section id="win-screen" class="screen hidden">
 
@@ -238,6 +245,13 @@
 
                     <strong id="password">
                         suburbio
+                    </strong>
+
+                    <strong
+                        id="password-code"
+                        class="password-code"
+                    >
+                        03 =PQKL
                     </strong>
 
                 </div>
