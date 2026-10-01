@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Más o Menos - Fútbol</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="game-container">
+
+        <header class="game-header">
+            <h1>⚽ MÁS O MENOS</h1>
+            <p>¿Quién tiene mayor valor de mercado?</p>
+        </header>
+
+
+        <!-- PANTALLA DE INICIO -->
+
+        <section id="start-screen" class="screen">
+
+            <div class="intro-card">
+
+                <div class="football">⚽</div>
+
+                <h2>El reto</h2>
+
+                <p>
+                    Consigue <strong>20 aciertos consecutivos</strong>
+                    comparando el valor de mercado de futbolistas.
+                </p>
+
+                <p class="small-text">
+                    Un solo fallo y tendrás que empezar de nuevo.
+                </p>
+
+                <button id="start-button" class="main-button">
+                    EMPEZAR
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- PANTALLA DEL JUEGO -->
+
+        <section id="game-screen" class="screen hidden">
+
+            <div class="game-info">
+
+                <span>
+                    Ronda <strong id="round">1</strong>/20
+                </span>
+
+                <span>
+                    🔥 Racha:
+                    <strong id="streak">0</strong>
+                </span>
+
+            </div>
+
+
+            <div class="players-container">
+
+
+                <!-- JUGADOR ACTUAL -->
+
+                <div class="player-card current-player">
+
+                    <div class="player-label">
+                        VALOR CONOCIDO
+                    </div>
+
+                    <div class="player-photo-container">
+                        <img
+                            id="current-image"
+                            src=""
+                            alt=""
+                        >
+                    </div>
+
+                    <h2 id="current-name">
+                        Jugador
+                    </h2>
+
+                    <p id="current-club">
+                        Club
+                    </p>
+
+                    <div
+                        id="current-value"
+                        class="player-value"
+                    >
+                        €0 M
+                    </div>
+
+                </div>
+
+
+                <div class="versus">
+                    VS
+                </div>
+
+
+                <!-- SIGUIENTE JUGADOR -->
+
+                <div class="player-card next-player">
+
+                    <div class="player-label">
+                        ¿CUÁNTO VALE?
+                    </div>
+
+                    <div class="player-photo-container">
+                        <img
+                            id="next-image"
+                            src=""
+                            alt=""
+                        >
+                    </div>
+
+                    <h2 id="next-name">
+                        Jugador
+                    </h2>
+
+                    <p id="next-club">
+                        Club
+                    </p>
+
+                    <div
+                        id="next-value"
+                        class="player-value hidden-value"
+                    >
+                        ¿?
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- BOTONES -->
+
+            <div id="answer-buttons" class="answer-buttons">
+
+                <button
+                    id="higher-button"
+                    class="answer-button higher"
+                >
+                    ↑ MÁS
+                </button>
+
+                <button
+                    id="lower-button"
+                    class="answer-button lower"
+                >
+                    ↓ MENOS
+                </button>
+
+            </div>
+
+
+            <!-- MENSAJE -->
+
+            <div
+                id="feedback"
+                class="feedback hidden"
+            ></div>
+
+        </section>
+
+
+        <!-- PANTALLA DE DERROTA -->
+
+        <section id="lose-screen" class="screen hidden">
+
+            <div class="result-card lose-card">
+
+                <div class="result-icon">
+                    💀
+                </div>
+
+                <h2>HAS PERDIDO</h2>
+
+                <p>
+                    Tu racha ha terminado.
+                </p>
+
+                <div class="final-streak">
+
+                    <span id="lost-streak">
+                        0
+                    </span>
+
+                    <small>
+                        aciertos consecutivos
+                    </small>
+
+                </div>
+
+                <button
+                    id="restart-button"
+                    class="main-button"
+                >
+                    INTENTAR DE NUEVO
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- PANTALLA DE VICTORIA -->
+
+        <section id="win-screen" class="screen hidden">
+
+            <div class="result-card win-card">
+
+                <div class="result-icon">
+                    🏆
+                </div>
+
+                <h2>¡LO HAS CONSEGUIDO!</h2>
+
+                <p>
+                    20 aciertos consecutivos.
+                </p>
+
+                <div class="password-box">
+
+                    <span>
+                        CONTRASEÑA
+                    </span>
+
+                    <strong id="password">
+                        suburbio
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <script src="game.js"></script>
+
+</body>
+</html>
